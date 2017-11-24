@@ -1,5 +1,5 @@
 {
-	"name": "auth",
+	"name": "tech_stack",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
@@ -7,10 +7,8 @@
 		"test": "jest"
 	},
 	"dependencies": {
-		"eslint": "^4.11.0",
-		"firebase": "^4.6.2",
 		"react": "16.0.0",
-		"react-native": "0.50.3"
+		"react-native": "0.50.4"
 	},
 	"devDependencies": {
 		"babel-jest": "21.2.0",
