@@ -6,7 +6,7 @@ class ListItem extends Component {
         return (
             <TouchableHighlight onPress={this.props.onPress} onLongPress={this.props.onLongPress}>
                 <View style={styles.li}>
-                    <Text style={styles.liTitle}>{this.props.item.title}</Text>
+                    <Text style={styles.liTitle}>{this.props.text}</Text>
                 </View>
             </TouchableHighlight>
         );

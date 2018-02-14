@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, View, ListView, AlertIOS } from 'react-native';
 import { Provider } from 'react-redux';
-import store from './components/reducers/reducer'
+import store from './components/store'
 import Header from './components/Header'
 import Button from './components/Button'
 import ListItem from './components/ListItem'
@@ -22,16 +22,16 @@ export default class App extends Component{
 
   render() {
     return (
-      <Provider store={store}>
-      <View style={styles.container}>
-      <Header title="ToDo with Redux"/>
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderItem.bind(this)}
-        enableEmptySections={true}
-        style={styles.listview}/>
-      <Button title="Add Item" onPress={this.addItem.bind(this)} />
-      </View>
+      <Provider store={ store }>
+        <View style={styles.container}>
+        <Header title="ToDo with Redux"/>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderItem.bind(this)}
+          enableEmptySections={true}
+          style={styles.listview}/>
+        <Button title="Add Item" onPress={this.addItem.bind(this)} />
+        </View>
       </Provider>
     );
   }
@@ -43,13 +43,13 @@ export default class App extends Component{
         'current item is ' + item.title,
         [
           {text: 'Cancel', onPress: () => console.log('cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: (text) => this.itemsRef.child(item._key).update({title: text})},
+          {text: 'OK', onPress: (text) => this.props.update({text: text})},
         ],
       )
     };
 
     return(
-        <ListItem item={item} onPress={onPress} onLongPress={this.props.complete}/>
+        <ListItem item={item} onPress={onPress} onLongPress={this.props.complete({complete: true})}/>
     );
   }
 
@@ -59,7 +59,7 @@ export default class App extends Component{
       null,
       [
           {text: 'Cancel', onPress: () => console.log('cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: (text) => this.props.add({text})},
+          {text: 'OK', onPress: (text) => this.props.add({text: text })},
        ],
     )
   }

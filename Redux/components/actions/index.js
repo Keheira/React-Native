@@ -1,33 +1,32 @@
 import React, { Component } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import App from '../../App'
+import ListItem from '../ListItem';
 
 const mapStateToProps = state => ({
-    list: state
+    id: state.id,
+    text: state.text,
+    complete: state.complete
 })
 
 const mapDispatchToProps = (dispath) => ({
     add: (text) => {
         dispatch({
             type: 'ADD',
-            list: list,
             text: text
         })
     },
     complete: () => {
         dispatch({
-            type: 'Completed',
-            list: list
+            type: 'COMPLETE'
         })
     },
     update: (text) => {
         dispatch({
             type: 'UPDATE',
-            list: list,
             text: text
         })
     },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(ListItem)
