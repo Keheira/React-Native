@@ -29,4 +29,4 @@ const mapDispatchToProps = (dispath) => ({
     },
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListItem)
+export default connect(mapStateToProps, mapDispatchToProps)(App, ListItem)

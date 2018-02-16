@@ -3,9 +3,9 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, View, ListView, AlertIOS } from 'react-native';
+import { StyleSheet, View, ListView, AlertIOS, TextInput } from 'react-native';
 import { Provider } from 'react-redux';
-import store from './components/store'
+import store from './components/reducers/list'
 import Header from './components/Header'
 import Button from './components/Button'
 import ListItem from './components/ListItem'
@@ -16,7 +16,8 @@ export default class App extends Component{
     this.state = {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2
-      })
+      }),
+      text: ''
     };
   }
 
@@ -30,7 +31,15 @@ export default class App extends Component{
           renderRow={this.renderItem.bind(this)}
           enableEmptySections={true}
           style={styles.listview}/>
-        <Button title="Add Item" onPress={this.addItem.bind(this)} />
+        <View style={styles.input}>
+          <TextInput
+            style={styles.text}
+            placeholder = "Item Name"
+            onChangeText={(text) => this.setState({text})}
+            value={this.state.text}
+          />
+          <Button title="Add Item" onPress={this.addItem.bind(this)} />
+        </View>
         </View>
       </Provider>
     );
@@ -39,29 +48,25 @@ export default class App extends Component{
   renderItem(item) {
     const onPress = () => {
       AlertIOS.prompt(
-        'Edit Item',
-        'current item is ' + item.title,
+        'Done?',
+        'Did you complete this item?',
         [
           {text: 'Cancel', onPress: () => console.log('cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: (text) => this.props.update({text: text})},
+          {text: 'OK', onPress: (text) => this.props.complete({complete: true})},
         ],
       )
     };
 
     return(
-        <ListItem item={item} onPress={onPress} onLongPress={this.props.complete({complete: true})}/>
+        <ListItem item={item} onPress={onPress}/>
     );
   }
 
   addItem() {
-    AlertIOS.prompt(
-      'Add Item',
-      null,
-      [
-          {text: 'Cancel', onPress: () => console.log('cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: (text) => this.props.add({text: text })},
-       ],
-    )
+    this.props.add(this.state.text)
+    this.setState({
+      text: ''
+    })
   }
 }
 
@@ -70,4 +75,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F5FCFF',
   },
+  input: {
+    flexDirection: 'row',
+    backgroundColor: '#FFFFFF'
+  },
+  text: {
+    width: 300,
+    height: 20
+  }
 });

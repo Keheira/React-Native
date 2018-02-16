@@ -23,9 +23,10 @@ const styles = {
         backgroundColor: '#24CE84',
         borderColor: 'transparent',
         borderWidth: 1,
-        paddingLeft: 16,
-        paddingTop: 14,
-        paddingBottom: 16,
+        paddingLeft: 5,
+        paddingTop: 10,
+        paddingBottom: 10,
+        paddingRight: 5
     },
 };
 

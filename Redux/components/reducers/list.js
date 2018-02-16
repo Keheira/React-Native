@@ -1,8 +1,7 @@
 import { createStore } from 'redux'
-import State from '../state'
 
 
-export const list = (state = State, action) => {
+export const list = (state = {}, action) => {
     switch(action.type){
         case 'ADD':
             return{
@@ -24,3 +23,5 @@ export const list = (state = State, action) => {
             return state;
     }
 }
+
+export default store = createStore(list)
