@@ -1,5 +1,7 @@
-export const ITEMS = {
-    id: 0,
-    text: '',
-    completed: false
+export const initialState = {
+    list: {
+        id: 0,
+        text: '',
+        complete: false
+    }
 }

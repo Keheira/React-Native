@@ -3,9 +3,10 @@
  */
 
 import React, { Component } from 'react';
-import { StyleSheet, View, ListView, AlertIOS, TextInput } from 'react-native';
-import { Provider } from 'react-redux';
-import store from './components/reducers/list'
+import { View, ListView, AlertIOS, TextInput } from 'react-native';
+import { Provider, connect } from 'react-redux';
+import store from './components/store'
+import { add, complete } from './components/actions/index'
 import Header from './components/Header'
 import Button from './components/Button'
 import ListItem from './components/ListItem'
@@ -63,14 +64,15 @@ export default class App extends Component{
   }
 
   addItem() {
-    this.props.add(this.state.text)
+    console.log('This is the state: ' + store.getState())
+    add(this.state.text)
     this.setState({
       text: ''
     })
   }
 }
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
@@ -81,6 +83,9 @@ const styles = StyleSheet.create({
   },
   text: {
     width: 300,
-    height: 20
+    height: 20,
+    alignSelf: 'center'
   }
-});
+};
+
+connect()(App)
