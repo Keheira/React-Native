@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
-import { View, TouchableHighlight, Text, Image, Button } from 'react-native';
+import { View, TouchableHighlight, Text} from 'react-native';
 
 class ListItem extends Component {
     render() {
         return (
             <TouchableHighlight onPress={this.props.onPress} onLongPress={this.props.onLongPress}>
                 <View style={styles.li}>
-                    <Text style={styles.liTitle}>{this.props.text}</Text>
+                    <Text style={styles.liTitle}>{this.props.item.text}</Text>
                 </View>
             </TouchableHighlight>
         );

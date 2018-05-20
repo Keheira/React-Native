@@ -1,15 +1,16 @@
 /**
  * Backpack Media
  */
-
 import React, { Component } from 'react';
 import { View, ListView, AlertIOS, TextInput } from 'react-native';
 import { Provider, connect } from 'react-redux';
-import store from './components/store'
-import { add, complete } from './components/actions/index'
+import store from './components/store';
+import * as mainActions from './components/actions/index'
 import Header from './components/Header'
 import Button from './components/Button'
 import ListItem from './components/ListItem'
+import { bindActionCreators } from 'redux';
+
 
 export default class App extends Component{
   constructor(props) {
@@ -19,7 +20,7 @@ export default class App extends Component{
         rowHasChanged: (row1, row2) => row1 !== row2
       }),
       text: ''
-    };
+    }
   }
 
   render() {
@@ -28,7 +29,7 @@ export default class App extends Component{
         <View style={styles.container}>
         <Header title="ToDo with Redux"/>
         <ListView
-          dataSource={this.state.dataSource}
+          dataSource={this.props.dataSource}
           renderRow={this.renderItem.bind(this)}
           enableEmptySections={true}
           style={styles.listview}/>
@@ -48,14 +49,14 @@ export default class App extends Component{
 
   renderItem(item) {
     const onPress = () => {
-      AlertIOS.prompt(
+      /*AlertIOS.prompt(
         'Done?',
         'Did you complete this item?',
         [
           {text: 'Cancel', onPress: () => console.log('cancel Pressed'), style: 'cancel'},
-          {text: 'OK', onPress: (text) => this.props.complete({complete: true})},
+          {text: 'OK', onPress: (text) => complete({complete: true})},
         ],
-      )
+      )*/
     };
 
     return(
@@ -64,18 +65,34 @@ export default class App extends Component{
   }
 
   addItem() {
-    console.log('This is the state: ' + store.getState())
-    add(this.state.text)
+    //this.props.actions.add(this.state.text)
+    debugger
     this.setState({
       text: ''
     })
   }
 }
 
+const mapStateToProps = state => {
+  return {
+    dataSource: dataSource.cloneWithRows(state.items)
+  }
+}
+
+const mapDispatchToProps = dispatch =>{
+  return {
+    actions: bindActionCreators(mainActions, dispatch)
+  }
+}
+connect(mapStateToProps, mapDispatchToProps)(App)
+
 const styles = {
   container: {
     flex: 1,
     backgroundColor: '#F5FCFF',
+  },
+  listview: {
+    flex:1
   },
   input: {
     flexDirection: 'row',
@@ -87,5 +104,3 @@ const styles = {
     alignSelf: 'center'
   }
 };
-
-connect()(App)

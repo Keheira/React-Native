@@ -1,10 +1,15 @@
-const list = (state = [], action) => {
+const initialState = {
+    list: [
+        {text: 'Read', id: '123', complete: false}
+    ]
+}
+const items = (state = initialState, action) => {
     switch(action.type){
         case 'ADD':
             return[
                 ...state,
                 {
-                    id: action.id,
+                    id: id,
                     text: action.text,
                     complete: false
                 }
@@ -20,4 +25,4 @@ const list = (state = [], action) => {
     }
 }
 
-export default list
+export default items
